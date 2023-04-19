@@ -7,18 +7,18 @@ const DataMerger = () => {
     () => [
       {
         id: 1,
-        attribute1: 'A1',
-        attribute2: 'B1',
-        attribute3: 'C1',
+        saleDate: '2023-04-01',
+        salePrice: 350000,
+        address: '123 Main St',
         subRows: [
-          { id: 6, attribute1: 'A6', attribute2: 'B6', attribute3: 'C6' },
-          { id: 7, attribute1: 'A7', attribute2: 'B7', attribute3: 'C7' },
+          { id: 6, saleDate: '2023-03-15', salePrice: 340000, address: '123 Main St' },
+          { id: 7, saleDate: '2023-02-28', salePrice: 360000, address: '123 Main St' },
         ],
       },
-      { id: 2, attribute1: 'A2', attribute2: 'B2', attribute3: 'C2' },
-      { id: 3, attribute1: 'A3', attribute2: 'B3', attribute3: 'C3' },
-      { id: 4, attribute1: 'A4', attribute2: 'B4', attribute3: 'C4' },
-      { id: 5, attribute1: 'A5', attribute2: 'B5', attribute3: 'C5' },
+      { id: 2, saleDate: '2023-03-20', salePrice: 450000, address: '456 Oak St' },
+      { id: 3, saleDate: '2023-03-10', salePrice: 500000, address: '789 Maple Ave' },
+      { id: 4, saleDate: '2023-04-05', salePrice: 420000, address: '111 Pine St' },
+      { id: 5, saleDate: '2023-03-25', salePrice: 390000, address: '222 Elm St' },
     ],
     []
   );
@@ -40,9 +40,9 @@ const DataMerger = () => {
           }
         },
       },
-      { Header: 'Attribute 1', accessor: 'attribute1' },
-      { Header: 'Attribute 2', accessor: 'attribute2' },
-      { Header: 'Attribute 3', accessor: 'attribute3' },
+      { Header: 'Sale Date', accessor: 'saleDate' },
+      { Header: 'Sale Price', accessor: 'salePrice' },
+      { Header: 'Address', accessor: 'address' },
     ],
     []
   );  
