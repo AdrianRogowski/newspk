@@ -147,14 +147,14 @@ const DataMerger = () => {
   });
 
   const [masterRow, setMasterRow] = useState({
-    saleDate: null,
-    salePrice: null,
-    address: null,
-    buyer: null,
-    seller: null,
-    trueBuyer: null,
-    trueSeller: null,
-    submitter: null,
+    saleDate: '2023-03-20',
+    salePrice: 450000,
+    address: '456 Oak St',
+    buyer: 'Tom Jackson',
+    seller: 'Sarah Williams',
+    trueBuyer: 'Tom Jackson',
+    trueSeller: 'Sarah Williams',
+    submitter: 'Agent C',
   });
 
   const selectCell = (columnId, value) => {
