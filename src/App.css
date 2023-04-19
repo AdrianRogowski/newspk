@@ -26,3 +26,8 @@
 .selected {
   background-color: #1dfffb !important;
 }
+
+.subrow-table {
+  margin-left: -8px;
+  margin-right: -8px;
+}

@@ -65,12 +65,25 @@ const DataMerger = () => {
     useExpanded
   );
 
-  const [trueRow, setTrueRow] = useState({});
+  const [trueRow, setTrueRow] = useState({
+    attribute1: null,
+    attribute2: null,
+    attribute3: null,
+  });
   const [masterRow, setMasterRow] = useState({});
 
   const selectCell = (columnId, value) => {
-    setTrueRow({ ...trueRow, [columnId]: value });
+    setTrueRow((prevTrueRow) => {
+      if (prevTrueRow[columnId] === value) {
+        // Remove the value from the true row and unhighlight the cell
+        return { ...prevTrueRow, [columnId]: null };
+      } else {
+        // Add the value to the true row and highlight the cell
+        return { ...prevTrueRow, [columnId]: value };
+      }
+    });
   };
+  
 
   const saveTrueRow = () => {
     const updatedMasterRow = { ...masterRow };
@@ -91,40 +104,54 @@ const DataMerger = () => {
 
   return (
     <div>
-      <h2>Master</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.accessor}>{column.header}</th>
-            ))}
+    <h2>Master</h2>
+    <table className="table">
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            <th></th>
+            {headerGroup.headers
+              .filter((column) => column.id !== 'expander')
+              .map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {columns.map((column) => (
-              <td key={column.accessor}>{masterRow[column.accessor]}</td>
-            ))}
+        ))}
+      </thead>
+      <tbody>
+        <tr>
+          <td></td> {/* Add an empty cell for the expander column */}
+          {Object.entries(masterRow).map(([key, value]) => (
+            <td key={key}>{value}</td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+    <h2>Changes to be applied</h2>
+    <table className="table">
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            <th></th>
+            {headerGroup.headers
+              .filter((column) => column.id !== 'expander')
+              .map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
           </tr>
-        </tbody>
-      </table>
-      <h2>Changes to be applied</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.accessor}>{column.header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {columns.map((column) => (
+        ))}
+      </thead>
+      <tbody>
+        <tr>
+          <td></td> {/* Add an empty cell for the expander column */}
+          {columns
+            .filter((column) => column.id !== 'expander')
+            .map((column) => (
               <td key={column.accessor}>{trueRow[column.accessor]}</td>
             ))}
-          </tr>
-        </tbody>
-      </table>
+        </tr>
+      </tbody>
+    </table>
       <h2>Data Rows</h2>
       <table className="table" {...getTableProps()}>
         <thead>
@@ -161,30 +188,6 @@ const DataMerger = () => {
                   );
                 })}
               </tr>
-                {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={columns.length}>
-                      <table className="table">
-                        <tbody>
-                          {row.original.subRows.map((subRow) => (
-                            <tr key={subRow.id}>
-                              <td></td>
-                              {columns.slice(1).map((column) => (
-                                <td
-                                  key={column.id}
-                                  onClick={() => selectCell(column.accessor, subRow[column.accessor])}
-                                  className={trueRow[column.accessor] === subRow[column.accessor] ? 'selected' : ''}
-                                >
-                                  {subRow[column.accessor]}
-                                </td>
-                              ))}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                ) : null}
               </React.Fragment>
             );
           })}
